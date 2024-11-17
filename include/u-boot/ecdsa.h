@@ -9,6 +9,8 @@
 #include <errno.h>
 #include <image.h>
 
+#ifndef __ECDSA_SIGN__
+#define __ECDSA_SIGN__
 /**
  * crypto_algo API impementation for ECDSA;
  * @see "struct crypto_algo"
@@ -33,6 +35,7 @@
  */
 int ecdsa_sign(struct image_sign_info *info, const struct image_region region[],
 	       int region_count, uint8_t **sigp, uint *sig_len);
+#endif
 
 /**
  * add_verify_data() - Add verification information to FDT
@@ -49,6 +52,8 @@ int ecdsa_sign(struct image_sign_info *info, const struct image_region region[],
  */
 int ecdsa_add_verify_data(struct image_sign_info *info, void *keydest);
 
+#ifndef __ECDSA_VERIFY__
+#define __ECDSA_VERIFY__
 /**
  * verify() - Verify a signature against some data
  *
@@ -63,6 +68,7 @@ int ecdsa_verify(struct image_sign_info *info,
 		 const struct image_region region[], int region_count,
 		 uint8_t *sig, uint sig_len);
 /** @} */
+#endif
 
 #define ECDSA256_BYTES	(256 / 8)
 #define ECDSA384_BYTES	(384 / 8)

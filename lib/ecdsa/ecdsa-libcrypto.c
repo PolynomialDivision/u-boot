@@ -238,6 +238,8 @@ static int do_verify(struct signer *ctx, struct image_sign_info *info,
 	return ecdsa_check_signature(ctx, info);
 }
 
+#ifndef __ECDSA_SIGN__
+#define __ECDSA_SIGN__
 int ecdsa_sign(struct image_sign_info *info, const struct image_region region[],
 	       int region_count, uint8_t **sigp, uint *sig_len)
 {
@@ -256,7 +258,10 @@ int ecdsa_sign(struct image_sign_info *info, const struct image_region region[],
 	free_ctx(&ctx);
 	return ret;
 }
+#endif
 
+#ifndef __ECDSA_VERIFY__
+#define __ECDSA_VERIFY__
 int ecdsa_verify(struct image_sign_info *info,
 		 const struct image_region region[], int region_count,
 		 uint8_t *sig, uint sig_len)
@@ -271,6 +276,7 @@ int ecdsa_verify(struct image_sign_info *info,
 	free_ctx(&ctx);
 	return ret;
 }
+#endif
 
 static int do_add(struct signer *ctx, void *fdt, const char *key_node_name,
 		  struct image_sign_info *info)
